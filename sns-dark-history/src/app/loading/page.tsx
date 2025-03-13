@@ -1,11 +1,15 @@
 import Link from "next/link";
+
+export const metadata = {
+  title: "SNS | loading",
+};
+
 export default function Page() {
   return (
     <>
-      <h1>hello</h1>
-      <h1>a</h1>
+      <h1>loading</h1>
       <p>
-        <Link href="result">次へ</Link>
+        <Link href="/">top</Link>
       </p>
     </>
   );
