@@ -15,9 +15,11 @@ export default function Page() {
           </video>
         </div>
         <div className="items-center justify-center flex flex-col">
-          <button className="mt-12 px-9 py-3 w-48 bg-black text-white rounded-full shadow-md hover:bg-red-600">
-            黒歴史を振り返る
-          </button>
+          <Link href="/movie">
+            <button className="mt-12 px-9 py-3 w-48 bg-black text-white rounded-full shadow-md hover:bg-red-600">
+              黒歴史を振り返る
+            </button>
+          </Link>
           <Link href="/">
             <button className="mt-8 px-9 py-3 w-48 bg-black text-white rounded-full shadow-md hover:bg-red-600">
               トップに戻る
