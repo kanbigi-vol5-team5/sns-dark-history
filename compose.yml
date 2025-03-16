@@ -1,12 +1,19 @@
 services:
   app:
     build:
-      context: ./sns-dark-history
-    tty: true
-    volumes:
-      - ./src:/app
-    environment:
-      - WATCHPACK_POLLING=true
-    command: sh -c "npm run dev"
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+      target: development
+    init: true
     ports:
       - "3000:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./sns-dark-history
+          target: /app/sns-dark-history
+          ignore:
+            - node_modules
+            - .next
+        - action: rebuild
+          path: package.json
