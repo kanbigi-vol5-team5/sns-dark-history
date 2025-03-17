@@ -15,15 +15,16 @@ class DarkEvaluator:
         }
         json_data = json.dumps(data)
         response = requests.post(
-        os.environ['AI_ENDPOINT'],
+        'http://100.72.123.53/v1/workflows/run',
         data=json_data,
-        headers={"Content-Type": "application/json","Authorization": f"Bearer {os.environ['AI_TOKEN']}"}
+        headers={"Content-Type": "application/json","Authorization": f"Bearer app-4xHXyqWyU7v64EAabmOKGMJI"}
         )
         if response.status_code != 200:
             print(response.json())
             return False
         result = response.json()
         if not result['data']['outputs'] or not result['data']['outputs']['output']:
+            print(result)
             return False
         return result['data']['outputs']['output'][0] and True
     
