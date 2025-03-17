@@ -1,0 +1,19 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: ./docker/app/Dockerfile
+      target: development
+    init: true
+    ports:
+      - "3000:3000"
+    develop:
+      watch:
+        - action: sync
+          path: ./sns-dark-history
+          target: /app/sns-dark-history
+          ignore:
+            - node_modules
+            - .next
+        - action: rebuild
+          path: package.json
