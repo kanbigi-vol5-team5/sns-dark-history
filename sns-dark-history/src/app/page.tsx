@@ -23,7 +23,7 @@ import Link from "next/link";
 export default function Page() {
   return (
     <>
-      <div className="h-screen bg-cover bg-center bg-[url('/img/background2.PNG')]">
+      <div className="h-screen bg-cover bg-center bg-[url('/img/background2.png')]">
         <h1 className="text-4xl items-center justify-center flex pt-20 font-bold">
           SNS黒歴史クリーナー
         </h1>
