@@ -3,7 +3,7 @@ export default function Page() {
     <>
       <div className="h-screen bg-cover bg-center bg-[url('/img/background2.png')]">
         <h1 className="text-4xl items-center justify-center flex pt-20 font-bold">
-          SNS黒歴史クリーナー
+          Dark History
         </h1>
         <div className="flex flex-col items-center justify-center min-h-screen">
           <input
