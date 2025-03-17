@@ -45,4 +45,5 @@ WORKDIR /app/sns-dark-history
 
 COPY --chown=node:node /sns-dark-history ./sns-dark-history
 COPY --from=base --chown=node:node /app/sns-dark-history/node_modules ./sns-dark-history
+RUN npm run build
 CMD ["npm", "start"]
