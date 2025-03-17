@@ -16,8 +16,8 @@ export default function Page() {
         </div>
         <div className="items-center justify-center flex flex-col">
           <Link href="/movie">
-            <button className="mt-12 px-9 py-3 w-52 bg-black text-white rounded-full shadow-md hover:bg-red-600">
-              黒歴史をさらしていく
+            <button className="mt-12 px-9 py-3 w-48 bg-black text-white rounded-full shadow-md hover:bg-red-600">
+              黒歴史を振り返る
             </button>
           </Link>
           <Link href="/">
