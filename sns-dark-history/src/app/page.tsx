@@ -1,25 +1,3 @@
-import Link from "next/link";
-//import { useState } from "react";
-
-/*const FetchXPosts = () => {
-  const [username, setUsername] = useState("");
-
-  const handleFetchPosts = async () => {
-    if (!username) return;
-
-    try {
-      const response = await fetch(`/api/x-posts?username=${username}`);
-      const data = await response.json();
-      console.log(data); // ここでデータを処理する
-    } catch (error) {
-      console.error("投稿の取得に失敗しました", error);
-    }
-  };
-
-  const handleClear = () => {
-    setUsername("");
-  };
-*/
 export default function Page() {
   return (
     <>
