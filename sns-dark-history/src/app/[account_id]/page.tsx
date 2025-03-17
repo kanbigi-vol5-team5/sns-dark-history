@@ -1,16 +1,26 @@
 "use client";
 import useSWR from 'swr';
-
 import Link from "next/link";
+import { useParams } from 'next/navigation';
 
 async function fetcher(key: string) {
   return fetch(key).then((res) => res.json() as Promise<Array<string> | null>);
 }
 
-export default function Page() {
-  const { data, error, isLoading } = useSWR('/api/dark_posts/taiseiue', fetcher);
+export default  function Page() {
+  const { account_id } = useParams();
+  const { data, error, isLoading } = useSWR(`/api/dark_posts/${account_id}`, fetcher);
   if (error) return <div>エラーです</div>;
-  if(isLoading) return <div>読み込み中...</div>;
+  if(isLoading){
+    return (<>
+      <div className="items-center justify-center flex flex-col min-h-screen">
+        <video width="300" height="300" loop autoPlay muted>
+          <source src="/img/loading.mp4" type="video/mp4" />
+          動画が表示されていません
+        </video>
+      </div>
+    </>);
+  }
   return (
     <>
       <div className="m-8 flex items-center justify-center flex-col">

@@ -2,6 +2,10 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  experimental: {
+    serverMinification: false,
+    proxyTimeout: 1000 * 120,
+  },
   swcMinify: true,
   async rewrites() {
     return [
