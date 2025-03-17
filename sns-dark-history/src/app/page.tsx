@@ -42,9 +42,6 @@ export default function Page() {
             消去していく
           </button>
         </div>
-        <p>
-          <Link href="result">次へ</Link>
-        </p>
       </div>
     </>
   );
