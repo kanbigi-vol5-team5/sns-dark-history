@@ -13,9 +13,8 @@ class DarkEvaluator:
     def Evaluate(self, content):
         if not self.checkValidText(content):
             return False
-        user_post = self.cleanUpText(content)
         data = {
-            "inputs": { "user_post": user_post},
+            "inputs": { "user_post": content},
             "response_mode": "blocking",
             "user": "abc-123"
         }
