@@ -50,4 +50,7 @@ class XPostsScraper:
                 before_data = current
         tweets_text = list(set(tweets_text))
         return tweets_text
-
+    async def getIcon(self, id):
+        self.driver.get(f'https://x.com/{id}/photo')
+        time.sleep(1)
+        return self.driver.find_element(By.CSS_SELECTOR, "img[draggable=\"true\"]").get_attribute('src')
