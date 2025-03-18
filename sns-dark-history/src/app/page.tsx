@@ -23,7 +23,7 @@ export default function Page() {
             onClick={() => router.push(`/${username}`)}
             className="mt-4 px-8 py-2 bg-black text-white rounded-full shadow-md hover:bg-red-600"
           >
-            消去していく
+            はじめる
           </button>
         </div>
       </div>
