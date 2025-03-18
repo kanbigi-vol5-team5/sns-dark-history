@@ -58,6 +58,8 @@ export default function LoadingUI() {
     }
   };
 
+
+  console.log(tick);
   useEffect(() => {
     goodSound.current = new Audio("/sounds/good.mp3");
     badSound.current = new Audio("/sounds/bad.mp3");
