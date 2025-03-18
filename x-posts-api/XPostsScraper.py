@@ -31,7 +31,7 @@ class XPostsScraper:
             self.driver.add_cookie(c)
         logOutput("Loading cookies success!")
 
-    async def getPosts(self, id, scroll_count=3):
+    async def getPosts(self, id, scroll_count=10):
         logOutput("Getting posts...")
         if id == "white":
             return []

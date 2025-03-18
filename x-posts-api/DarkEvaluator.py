@@ -42,6 +42,8 @@ class DarkEvaluator:
             return False
         if "https://" in content:
             return False
+        if ".com/" in content:
+            return False
         return True
 
 def logOutput(message):
