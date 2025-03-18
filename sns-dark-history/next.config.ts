@@ -13,8 +13,8 @@ const nextConfig: NextConfig = {
         destination: 'http://backend:5001/dark_posts/:user_id',
       },
       {
-        source: '/api/post',
-        destination: 'http://backend:5001/post',
+        source: '/api/posts/:user_id',
+        destination: 'http://backend:5001/posts/:user_id',
       },
       {
         source: '/api/icon/:user_id',
