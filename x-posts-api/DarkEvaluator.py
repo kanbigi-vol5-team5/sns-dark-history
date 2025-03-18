@@ -40,11 +40,11 @@ class DarkEvaluator:
     def checkValidText(self, content):
         if len(content) > 130:
             return False
+        if "http://" in content:
+            return False
+        if "https://" in content:
+            return False
         return True
-    def _remove_urls(self, text: str) -> str:
-        url_pattern = re.compile(r'https?://\S+|www\.\S+')
-        return url_pattern.sub('', text)
-
 
 def logOutput(message):
     print(f"[DarkEvaluator] {message}")
