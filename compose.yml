@@ -35,6 +35,8 @@ services:
   selenium:
     platform: linux/amd64
     image: selenium/standalone-chrome:latest
+    environment:
+      - SE_NODE_SESSION_TIMEOUT=30000
     ports:
       - 4444:4444
       - 7900:7900
