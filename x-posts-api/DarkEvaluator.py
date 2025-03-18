@@ -2,8 +2,14 @@ import requests
 import json
 import re
 import os
+from dotenv import load_dotenv
 
 class DarkEvaluator:
+    def __init__(self):
+        load_dotenv()
+        self.ai_endpoint = os.getenv('AI_ENDPOINT')
+        self.ai_token = os.getenv('AI_TOKEN')
+
     def Evaluate(self, content):
         if not self.checkValidText(content):
             return False
@@ -15,9 +21,9 @@ class DarkEvaluator:
         }
         json_data = json.dumps(data)
         response = requests.post(
-        'http://100.72.123.53/v1/workflows/run',
+        self.ai_endpoint,
         data=json_data,
-        headers={"Content-Type": "application/json","Authorization": f"Bearer app-4xHXyqWyU7v64EAabmOKGMJI"}
+        headers={"Content-Type": "application/json","Authorization": f"Bearer {self.ai_token}"}
         )
         if response.status_code != 200:
             print(response.json())
