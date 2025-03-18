@@ -13,7 +13,15 @@ export default function Page() {
     `/api/dark_posts/${account_id}`,
     fetcher
   );
-  if (error) return <div>エラーです</div>;
+  if (error)
+    return (
+      <>
+        <div className="h-screen flex items-center justify-center flex-col background-color-gray">
+          <img src="/img/500error.jpg" alt="エラー" className="mt-4 mx-auto" />
+          <div className="font-bold text-2xl">エラーです</div>
+        </div>{" "}
+      </>
+    );
   if (isLoading) {
     return (
       <>
