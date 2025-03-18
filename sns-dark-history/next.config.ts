@@ -6,7 +6,6 @@ const nextConfig: NextConfig = {
     serverMinification: false,
     proxyTimeout: 1000 * 120,
   },
-  swcMinify: true,
   async rewrites() {
     return [
       {
