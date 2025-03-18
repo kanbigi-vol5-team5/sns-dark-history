@@ -34,9 +34,6 @@ class DarkEvaluator:
             return False
         return result['data']['outputs']['output'][0] and True
     
-    def cleanUpText(self, content):
-        return self._remove_urls(content)
-    
     def checkValidText(self, content):
         if len(content) > 130:
             return False
