@@ -1,11 +1,13 @@
 from flask import Flask, request, Response
 from XPostsScraper import XPostsScraper
+from XPoster import XPoster
 from DarkEvaluator import DarkEvaluator
 import json
 import asyncio
 
 app = Flask(__name__)
 scraper = XPostsScraper()
+poster = XPoster()
 dark = DarkEvaluator()
 
 def response_as_json(content):
@@ -34,6 +36,18 @@ async def get_dark_posts(user_id):
             result += [post]
     return response_as_json(result)
 
+@app.route('/icon/<user_id>', methods=['GET'])
+async def get_icon(user_id):
+    return response_as_json(await scraper.getIcon(user_id))
+
+# Xに任意の内容で投稿するエンドポイント
+@app.route('/post', methods=['POST'])
+async def post():
+    content = request.json['content']
+    if poster.post(content):
+        return response_as_json({"status": "ok"})
+    else:
+        return response_as_json({"status": "ng"})
+
 if __name__ == '__main__':
     app.run(port = 5001, debug = True, host = "0.0.0.0") 
-
