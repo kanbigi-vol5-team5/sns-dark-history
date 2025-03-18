@@ -4,53 +4,71 @@ import pickle,os
 import time
 import asyncio
 
+COOKIES_PATH = 'sessions.pkl' # クッキーを保存するファイルの名前
+X_URL = 'https://x.com' # XのURL
+CHROME_UA = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36'
+CHROME_WINDOW_SIZE = "2400x100"
+
 class XPostsScraper:
-    login_url = 'https://x.com/login' # ログインのページ
-    web_url = 'https://x.com/' # 入りたいページ
-    cookies_file = 'sessions.pkl' # クッキーを保存するファイルの名前
-
-    options = webdriver.ChromeOptions()
-    if(os.path.exists(cookies_file)):
-        options.add_argument("--headless=new")
-        options.add_argument("--disable-gpu")
-        options.add_argument("--window-size=2400x100")
-        options.add_argument("--user-agent=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36")
-
-    driver = webdriver.Chrome(options=options)
 
     def __init__(self):
+        logOutput("Initializing..")
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless=new")
+        options.add_argument("--disable-gpu")
+        options.add_argument(f"--window-size={CHROME_WINDOW_SIZE}")
+        options.add_argument(f"--user-agent={CHROME_UA}")
+        self.driver = webdriver.Remote(
+        command_executor = os.environ["SELENIUM_URL"],
+        options=options)
         asyncio.run(self.login())
 
     async def login(self):
-        if(not os.path.exists(self.cookies_file)):
-            await self.performLogin()
-        else:
-            cookies = pickle.load(open(self.cookies_file,'rb'))
-            self.driver.get(self.web_url)
-            for c in cookies:
-                self.driver.add_cookie(c)
+        logOutput("Loading cookies..")
+        cookies = pickle.load(open(COOKIES_PATH,'rb'))
+        self.driver.get(X_URL)
+        for c in cookies:
+            self.driver.add_cookie(c)
+        logOutput("Loading cookies success!")
 
-    async def performLogin(self):
-        self.driver.get(self.login_url)
-        time.sleep(60)
-        cookies = self.driver.get_cookies()
-        pickle.dump(cookies,open(self.cookies_file,'wb'))
     async def getPosts(self, id, scroll_count=3):
-        self.driver.get(f'https://x.com/{id}')
+        logOutput("Getting posts...")
+        self.driver.get(f'{X_URL}/{id}')
         tweets_text = []
         before_data = [""]
         for _ in range(scroll_count):
+            try:
                 self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+                logOutput("Scrolling...")
                 time.sleep(2)
                 tweets_elements =  self.driver.find_elements(By.CSS_SELECTOR, "*[data-testid=\"tweetText\"]")
+                logOutput("Text got!")
                 current = [el.text.strip() for el in tweets_elements if el.text.strip()]
                 tweets_text += current
                 if len(before_data) > 0 and len(current) > 0 and (before_data[-1] == current[-1]):
                     break
                 before_data = current
+            except Exception as e:
+                logOutput(f"Error: {e}")
         tweets_text = list(set(tweets_text))
         return tweets_text
     async def getIcon(self, id):
-        self.driver.get(f'https://x.com/{id}/photo')
+        self.driver.get(f'{X_URL}/{id}/photo')
         time.sleep(1)
         return self.driver.find_element(By.CSS_SELECTOR, "img[draggable=\"true\"]").get_attribute('src')
+
+def logOutput(message):
+    print(f"[XPostsScraper] {message}")
+
+def login():
+    options = webdriver.ChromeOptions()
+    options.add_argument(f"--window-size={CHROME_WINDOW_SIZE}")
+    options.add_argument(f"--user-agent={CHROME_UA}")
+    driver = webdriver.Chrome(options=options)
+    time.sleep(5)
+    driver.get('{X_URL}/login')
+    time.sleep(5)
+    input("Xにログインしてください。ログインが完了したらEnterを押してください。")
+    cookies = driver.get_cookies()
+    pickle.dump(cookies,open(COOKIES_PATH,'wb'))
+    driver.quit()

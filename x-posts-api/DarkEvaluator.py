@@ -26,7 +26,7 @@ class DarkEvaluator:
         headers={"Content-Type": "application/json","Authorization": f"Bearer {self.ai_token}"}
         )
         if response.status_code != 200:
-            print(response.json())
+            logOutput(f"Error: Response status is not OK. ({response.status_code})")
             return False
         result = response.json()
         if not result['data']['outputs'] or not result['data']['outputs']['output']:
@@ -44,3 +44,7 @@ class DarkEvaluator:
     def _remove_urls(self, text: str) -> str:
         url_pattern = re.compile(r'https?://\S+|www\.\S+')
         return url_pattern.sub('', text)
+
+
+def logOutput(message):
+    print(f"[DarkEvaluator] {message}")
