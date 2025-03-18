@@ -25,7 +25,7 @@ interface GameState {
   fallingObjects: FallingObject[];
 }
 
-export default function LoadingUI() {
+export default function LoadingUI({ title, description }: Readonly<{ title: string, description: string }>) {
   const gameContainerRef = useRef<HTMLDivElement | null>(null);
   const gameStateRef = useRef<GameState>({ playerX: 50, fallingObjects: [] });
   const startTimeRef = useRef<number>(Date.now());
@@ -303,8 +303,8 @@ export default function LoadingUI() {
           overflow: "hidden",
         }}
       >
-        <h1 style={{ fontSize: "2rem", marginBottom: "20px" }}>Kohei Game</h1>
-        <p style={{ marginBottom: "20px" }}>このゲームを開始しますか？</p>
+        <h1 style={{ fontSize: "2rem", marginBottom: "20px" }}>{title}</h1>
+        <p style={{ marginBottom: "20px" }}>{description}</p>
         <button
           onClick={startGame}
           style={{

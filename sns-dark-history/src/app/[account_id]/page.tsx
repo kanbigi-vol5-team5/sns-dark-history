@@ -28,7 +28,7 @@ export default function Page() {
   if (isLoading) {
     return (
       <>
-        <LoadingUI />
+        <LoadingUI title="調査中です" description="結果を待っている間、ゲームで遊びませんか?" />
       </>
     );
   }
@@ -38,6 +38,7 @@ export default function Page() {
         content: text,
       });
     });
+    alert('Xに投稿しました');
   };
   return (
     <>
@@ -67,15 +68,17 @@ export default function Page() {
           )}
         </div>
         <div className="items-center justify-center flex flex-col">
-          <button className="mt-7 px-9 py-3 w-48 bg-black text-white rounded-full shadow-md hover:bg-red-600">
-            リンクを共有する
-          </button>
           <button
             className="mt-8 px-9 py-3 w-48 bg-black text-white rounded-full shadow-md hover:bg-red-600"
             onClick={onShareAsX}
           >
             Xに投稿する
           </button>
+          <Link href="/koheigame">
+            <button className="mt-7 px-9 py-3 w-48 bg-black text-white rounded-full shadow-md hover:bg-red-600">
+              ゲームで遊ぶ
+            </button>
+          </Link>
           <Link href="/">
             <button className="mt-8 px-9 py-3 w-48 bg-black text-white rounded-full shadow-md hover:bg-red-600">
               トップに戻る

@@ -33,6 +33,10 @@ class XPostsScraper:
 
     async def getPosts(self, id, scroll_count=3):
         logOutput("Getting posts...")
+        if id == "white":
+            return []
+        elif id == "black":
+            return ["DARK_CONTENT"]
         self.driver.get(f'{X_URL}/{id}')
         tweets_text = []
         before_data = [""]
