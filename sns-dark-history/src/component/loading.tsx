@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useEffect } from "react";
+import useSWR from "swr";
 
 // 落下物の型定義（good: スコア加算、bad: ライフ減少、power: シールド付与）
 interface FallingObject {
@@ -25,14 +26,17 @@ interface GameState {
   fallingObjects: FallingObject[];
 }
 
-export default function LoadingUI() {
+async function fetcher(key: string) {
+  return fetch(key).then((res) => res.json() as Promise<string | null>);
+}
+
+export default function LoadingUI({ account_id }: Readonly<{ account_id: string }>) {
   const gameContainerRef = useRef<HTMLDivElement | null>(null);
   const gameStateRef = useRef<GameState>({ playerX: 50, fallingObjects: [] });
   const startTimeRef = useRef<number>(Date.now());
   const lastSpawnTimeRef = useRef<number>(Date.now());
   const lastCatchTimeRef = useRef<number>(0);
 
-  const [tick, setTick] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
   const [lives, setLives] = useState<number>(3);
   const [gameOver, setGameOver] = useState<boolean>(false);
@@ -57,6 +61,11 @@ export default function LoadingUI() {
       clone.play();
     }
   };
+
+  const { data, error, isLoading } = useSWR(
+    `/api/icon/${account_id}`,
+    fetcher
+  );
 
   useEffect(() => {
     goodSound.current = new Audio("/sounds/good.mp3");
@@ -246,7 +255,6 @@ export default function LoadingUI() {
         lastSpawnTimeRef.current = Date.now();
       }
 
-      setTick((prev) => prev + 1);
       animationFrameId = requestAnimationFrame(gameLoop);
     };
 
@@ -318,6 +326,26 @@ export default function LoadingUI() {
       </div>
     );
   }
+
+  if (error)
+    return (
+      <>
+        <div className="h-screen flex items-center justify-center flex-col background-color-gray">
+          <img src="/img/500error.jpg" alt="エラー" className="mt-4 mx-auto" />
+          <div className="font-bold text-2xl">エラーです</div>
+        </div>{" "}
+      </>
+    );
+  if (isLoading) {
+    return (
+      <>
+        <div className="items-center justify-center flex flex-col min-h-screen">
+          <div className="font-bold text-2xl">ゲームを準備しています</div>
+        </div>
+      </>
+    );
+  }
+  
 
   return (
     <div
@@ -455,7 +483,7 @@ export default function LoadingUI() {
 
       {/* プレイヤー表示 */}
       <img
-        src="/images/player.png"
+        src={data!}
         alt="Player"
         style={{
           position: "absolute",

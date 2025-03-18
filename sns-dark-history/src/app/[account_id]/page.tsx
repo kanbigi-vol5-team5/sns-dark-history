@@ -3,7 +3,7 @@ import axios from "axios";
 import useSWR from "swr";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import LoadingUI from "../../compornent/loading";
+import LoadingUI from "@/component/loading";
 
 async function fetcher(key: string) {
   return fetch(key).then((res) => res.json() as Promise<Array<string> | null>);
@@ -28,7 +28,7 @@ export default function Page() {
   if (isLoading) {
     return (
       <>
-        <LoadingUI />
+        <LoadingUI account_id={account_id!.toString()} />
       </>
     );
   }

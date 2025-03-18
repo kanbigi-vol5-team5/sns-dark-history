@@ -281,31 +281,28 @@ export default function Page() {
     setGameOver(false);
   };
 
-  const { data, error, isLoading } = useSWR(
-    `/api/icon/taiseiue`,
-    fetcher
+const { data, error, isLoading } = useSWR(
+  `/api/icon/taiseiue`,
+  fetcher
+);
+if (error)
+  return (
+    <>
+      <div className="h-screen flex items-center justify-center flex-col background-color-gray">
+        <img src="/img/500error.jpg" alt="エラー" className="mt-4 mx-auto" />
+        <div className="font-bold text-2xl">エラーです</div>
+      </div>{" "}
+    </>
   );
-  if (error)
-    return (
-      <>
-        <div className="h-screen flex items-center justify-center flex-col background-color-gray">
-          <img src="/img/500error.jpg" alt="エラー" className="mt-4 mx-auto" />
-          <div className="font-bold text-2xl">エラーです</div>
-        </div>{" "}
-      </>
-    );
-  if (isLoading) {
-    return (
-      <>
-        <div className="items-center justify-center flex flex-col min-h-screen">
-          <video width="300" height="300" loop autoPlay muted>
-            <source src="/img/loading.mp4" type="video/mp4" />
-            動画が表示されていません
-          </video>
-        </div>
-      </>
-    );
-  }
+if (isLoading) {
+  return (
+    <>
+      <div className="items-center justify-center flex flex-col min-h-screen">
+        <div className="font-bold text-2xl">ゲームを準備しています</div>
+      </div>
+    </>
+  );
+}
   return (
     <div
       ref={gameContainerRef}

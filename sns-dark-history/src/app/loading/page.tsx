@@ -32,7 +32,6 @@ export default function Page() {
   const lastSpawnTimeRef = useRef<number>(Date.now());
   const lastCatchTimeRef = useRef<number>(0);
 
-  const [tick, setTick] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
   const [lives, setLives] = useState<number>(3);
   const [gameOver, setGameOver] = useState<boolean>(false);
@@ -246,7 +245,6 @@ export default function Page() {
         lastSpawnTimeRef.current = Date.now();
       }
 
-      setTick((prev) => prev + 1);
       animationFrameId = requestAnimationFrame(gameLoop);
     };
 
