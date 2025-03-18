@@ -1,0 +1,6 @@
+flask
+asgiref
+selenium
+requests
+dotenv
+tweepy

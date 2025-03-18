@@ -1,6 +1,6 @@
 "use client";
-
 import React, { useRef, useState, useEffect } from "react";
+import useSWR from "swr";
 
 // 落下物の型定義（good: スコア加算、bad: ライフ減少、power: シールド付与）
 interface FallingObject {
@@ -25,14 +25,16 @@ interface GameState {
   fallingObjects: FallingObject[];
 }
 
+async function fetcher(key: string) {
+  return fetch(key).then((res) => res.json() as Promise<string | null>);
+}
+
 export default function Page() {
   const gameContainerRef = useRef<HTMLDivElement | null>(null);
   const gameStateRef = useRef<GameState>({ playerX: 50, fallingObjects: [] });
   const startTimeRef = useRef<number>(Date.now());
   const lastSpawnTimeRef = useRef<number>(Date.now());
   const lastCatchTimeRef = useRef<number>(0);
-
-  const [tick, setTick] = useState<number>(0);
   const [score, setScore] = useState<number>(0);
   const [lives, setLives] = useState<number>(3);
   const [gameOver, setGameOver] = useState<boolean>(false);
@@ -245,7 +247,6 @@ export default function Page() {
         lastSpawnTimeRef.current = Date.now();
       }
 
-      setTick((prev) => prev + 1);
       animationFrameId = requestAnimationFrame(gameLoop);
     };
 
@@ -280,6 +281,31 @@ export default function Page() {
     setGameOver(false);
   };
 
+  const { data, error, isLoading } = useSWR(
+    `/api/icon/taiseiue`,
+    fetcher
+  );
+  if (error)
+    return (
+      <>
+        <div className="h-screen flex items-center justify-center flex-col background-color-gray">
+          <img src="/img/500error.jpg" alt="エラー" className="mt-4 mx-auto" />
+          <div className="font-bold text-2xl">エラーです</div>
+        </div>{" "}
+      </>
+    );
+  if (isLoading) {
+    return (
+      <>
+        <div className="items-center justify-center flex flex-col min-h-screen">
+          <video width="300" height="300" loop autoPlay muted>
+            <source src="/img/loading.mp4" type="video/mp4" />
+            動画が表示されていません
+          </video>
+        </div>
+      </>
+    );
+  }
   return (
     <div
       ref={gameContainerRef}
@@ -416,7 +442,7 @@ export default function Page() {
 
       {/* プレイヤー表示 */}
       <img
-        src="/images/player.png"
+        src={data!}
         alt="Player"
         style={{
           position: "absolute",

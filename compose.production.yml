@@ -5,5 +5,43 @@ services:
       dockerfile: ./docker/app/Dockerfile
       target: production
     init: true
+    networks:
+      - app-network
+  backend:
+    build:
+      context: .
+      dockerfile: ./x-posts-api/Dockerfile
     ports:
-      - "8890:3000"
+      - "5001:5001"
+    environment:
+      SELENIUM_URL: http://selenium:4444/wd/hub
+    networks:
+      - app-network
+    depends_on:
+      selenium:
+        condition: service_healthy
+  selenium:
+    platform: linux/amd64
+    image: selenium/standalone-chrome:latest
+    ports:
+      - 4444:4444
+      - 7900:7900
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - app-network
+    healthcheck:
+      test: [ 'CMD', 'curl', '-f', 'http://localhost:4444/' ]
+      interval: 2s
+      timeout: 5s
+      retries: 60
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "8890:80"
+    networks:
+      - app-network
+networks:
+  app-network: {}
