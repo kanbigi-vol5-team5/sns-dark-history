@@ -3,12 +3,12 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function Page() {
-  const router = useRouter()
+  const router = useRouter();
   const [username, setUsername] = useState("");
   return (
     <>
       <div className="h-screen bg-cover bg-center bg-[url('/img/background2.png')]">
-        <h1 className="text-4xl items-center justify-center flex pt-20 font-bold">
+        <h1 className="text-5xl items-center justify-center flex pt-20 font-bold">
           Dark History
         </h1>
         <div className="flex flex-col items-center justify-center min-h-screen">

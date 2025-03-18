@@ -287,13 +287,14 @@ export default function Page() {
       style={{
         position: "relative",
         overflow: "hidden",
-        width: "100%",
-        maxWidth: "320px",
-        height: "568px",
-        margin: "0 auto",
+        width: "100vw", // ビューポート全体の幅
+        height: "100vh", // ビューポート全体の高さ
+        margin: "0", // 余白を削除
+
         border: "2px solid #000",
         backgroundImage: "url('/images/background.png')",
         backgroundSize: "cover",
+        backgroundPosition: "center", // 背景画像を中央に配置
       }}
     >
       {/* スコア・コンボ表示 */}
@@ -333,7 +334,6 @@ export default function Page() {
           position: "absolute",
           top: "70px",
           left: "10px",
-          transform: "translateX(-50%)",
           fontSize: "1.2rem",
           fontWeight: "bold",
           color: "#ff0",
@@ -348,7 +348,7 @@ export default function Page() {
         <div
           style={{
             position: "absolute",
-            top: "40px",
+            top: "100px",
             left: "50%",
             transform: "translateX(-50%)",
             fontSize: "1.2rem",
@@ -366,11 +366,9 @@ export default function Page() {
         onClick={() => setPaused((prev) => !prev)}
         style={{
           position: "absolute",
-          bottom: "70px",
-          left: "50%",
+          top: "30px",
+          right: "30px",
           transform: "translateX(-50%)",
-          padding: "10px 20px",
-          backgroundColor: "#0070f3",
           color: "#fff",
           border: "none",
           borderRadius: "5px",
@@ -378,7 +376,14 @@ export default function Page() {
           zIndex: 10,
         }}
       >
-        {paused ? "Resume" : "Pause"}
+        <img
+          src={paused ? "/img/resume.png" : "/img/pause.png"}
+          alt={paused ? "Resume" : "Pause"}
+          style={{
+            width: "40px", // 画像の幅
+            height: "40px", // 画像の高さ
+          }}
+        />
       </button>
 
       {/* 落下物レンダリング */}
