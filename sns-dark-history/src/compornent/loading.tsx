@@ -298,6 +298,7 @@ export default function LoadingUI() {
           backgroundColor: "#000",
           color: "#fff",
           textAlign: "center",
+          overflow: "hidden",
         }}
       >
         <h1 style={{ fontSize: "2rem", marginBottom: "20px" }}>Kohei Game</h1>
@@ -349,7 +350,6 @@ export default function LoadingUI() {
         }}
       >
         Score: {score}
-        {combo > 1 && <div style={{ fontSize: "1rem" }}>Combo x{combo}</div>}
       </div>
 
       {/* ライフ表示 */}

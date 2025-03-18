@@ -7,7 +7,7 @@ export const metadata = {
 export default function Page() {
   return (
     <>
-      <div className="h-screen flex items-center justify-center flex-col">
+      <div className="h-screen flex items-center justify-center flex-col overflow-hidden">
         <div className="items-center justify-center flex flex-col">
           <img src="/img/image_fx_.jpg"></img>
         </div>

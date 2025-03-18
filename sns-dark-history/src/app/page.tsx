@@ -7,7 +7,7 @@ export default function Page() {
   const [username, setUsername] = useState("");
   return (
     <>
-      <div className="h-screen bg-cover bg-center bg-[url('/img/background2.png')]">
+      <div className="h-screen bg-cover bg-center bg-[url('/img/background2.png')] overflow-hidden">
         <h1 className="text-5xl items-center justify-center flex pt-20 font-bold">
           Dark History
         </h1>
