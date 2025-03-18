@@ -1,8 +1,9 @@
 "use client";
-import axios from 'axios';
-import useSWR from 'swr';
+import axios from "axios";
+import useSWR from "swr";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import LoadingUI from "../../compornent/loading";
 
 async function fetcher(key: string) {
   return fetch(key).then((res) => res.json() as Promise<Array<string> | null>);
@@ -27,22 +28,17 @@ export default function Page() {
   if (isLoading) {
     return (
       <>
-        <div className="items-center justify-center flex flex-col min-h-screen">
-          <video width="300" height="300" loop autoPlay muted>
-            <source src="/img/loading.mp4" type="video/mp4" />
-            動画が表示されていません
-          </video>
-        </div>
+        <LoadingUI />
       </>
     );
   }
   const onShareAsX = async () => {
-    data!.map(async (text) => {  
-      await axios.post('/api/post', {
+    data!.map(async (text) => {
+      await axios.post("/api/post", {
         content: text,
-      })
+      });
     });
-  }
+  };
   return (
     <>
       <div className="m-8 flex items-center justify-center flex-col">
@@ -74,8 +70,10 @@ export default function Page() {
           <button className="mt-7 px-9 py-3 w-48 bg-black text-white rounded-full shadow-md hover:bg-red-600">
             リンクを共有する
           </button>
-          <button className="mt-8 px-9 py-3 w-48 bg-black text-white rounded-full shadow-md hover:bg-red-600"
-            onClick={onShareAsX}>
+          <button
+            className="mt-8 px-9 py-3 w-48 bg-black text-white rounded-full shadow-md hover:bg-red-600"
+            onClick={onShareAsX}
+          >
             Xに投稿する
           </button>
           <Link href="/">

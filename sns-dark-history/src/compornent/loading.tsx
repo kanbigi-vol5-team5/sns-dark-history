@@ -25,7 +25,7 @@ interface GameState {
   fallingObjects: FallingObject[];
 }
 
-export default function Page() {
+export default function LoadingUI() {
   const gameContainerRef = useRef<HTMLDivElement | null>(null);
   const gameStateRef = useRef<GameState>({ playerX: 50, fallingObjects: [] });
   const startTimeRef = useRef<number>(Date.now());
