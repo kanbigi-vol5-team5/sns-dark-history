@@ -22,7 +22,7 @@ services:
         condition: service_healthy
   selenium:
     platform: linux/amd64
-    image: selenium/standalone-chrome:latest
+    image: selenium/standalone-chrome:98.0-20250303
     ports:
       - 4444:4444
       - 7900:7900
