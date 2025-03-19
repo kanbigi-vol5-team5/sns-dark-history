@@ -45,7 +45,7 @@ export default function Page() {
       <div className="m-8 flex items-center justify-center flex-col">
         <h1 className="text-3xl font-bold">黒歴史を振り返る</h1>
         <div className="p-4 max-w-2xl mx-auto">
-          <h1 className="text-xl font-bold text-center">あなたの黒歴史は？</h1>
+          <h1 className="text-xl font-bold text-center">@{account_id}の黒歴史は？</h1>
           {data!.length > 0 ? (
             <ul className="list-disc list-outside bg-white p-4 rounded-md">
               {data!.map((text, index) => (
