@@ -16,5 +16,6 @@ class XPoster:
         try:
             self.client.create_tweet(text=content)
             return True
-        except:
+        except Exception as e:
+            print(f'[XPoster] Error: {e}')
             return False
