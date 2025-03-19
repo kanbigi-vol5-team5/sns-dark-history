@@ -2,6 +2,7 @@ import requests
 import json
 import re
 import os
+import sys
 from dotenv import load_dotenv
 
 class DarkEvaluator:
@@ -11,7 +12,8 @@ class DarkEvaluator:
         self.ai_token = os.getenv('AI_TOKEN')
 
     def Evaluate(self, content):
-        if not self.checkValidText(content):
+        if not checkValidText(content):
+            logOutput(f"{content} is not valid text.")
             return False
         if content == "DARK_CONTENT":
             return True
@@ -35,16 +37,16 @@ class DarkEvaluator:
             return False
         return result['data']['outputs']['output'][0] and True
     
-    def checkValidText(self, content):
-        if len(content) > 130:
-            return False
-        if "http://" in content:
-            return False
-        if "https://" in content:
-            return False
-        if ".com/" in content:
-            return False
-        return True
+def checkValidText(content):
+    if len(content) > 130:
+        return False
+    if "http://" in content:
+        return False
+    if "https://" in content:
+        return False
+    if ".com/" in content:
+        return False
+    return True
 
 def logOutput(message):
-    print(f"[DarkEvaluator] {message}")
+    print(f"[DarkEvaluator] {message}", file=sys.stdout, flush=True)

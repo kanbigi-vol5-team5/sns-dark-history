@@ -1,6 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-import pickle,os
+import pickle,os,sys
 import time
 import asyncio
 
@@ -18,9 +18,11 @@ class XPostsScraper:
         options.add_argument("--disable-gpu")
         options.add_argument(f"--window-size={CHROME_WINDOW_SIZE}")
         options.add_argument(f"--user-agent={CHROME_UA}")
+        logOutput(f"Connecting to {os.environ['SELENIUM_URL']}..")
         self.driver = webdriver.Remote(
         command_executor = os.environ["SELENIUM_URL"],
         options=options)
+        logOutput("Connected!")
         asyncio.run(self.login())
 
     async def login(self):
@@ -62,7 +64,7 @@ class XPostsScraper:
         return self.driver.find_element(By.CSS_SELECTOR, "img[draggable=\"true\"]").get_attribute('src')
 
 def logOutput(message):
-    print(f"[XPostsScraper] {message}")
+    print(f"[XPostsScraper] {message}", file=sys.stdout, flush=True)
 
 def login():
     options = webdriver.ChromeOptions()

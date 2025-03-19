@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd x-posts-api
+python3 login.py

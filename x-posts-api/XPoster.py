@@ -1,5 +1,5 @@
 import tweepy
-import os
+import os,sys
 from dotenv import load_dotenv
 
 class XPoster:
@@ -17,5 +17,5 @@ class XPoster:
             self.client.create_tweet(text=content)
             return True
         except Exception as e:
-            print(f'[XPoster] Error: {e}')
+            print(f'[XPoster] Error: {e}', file=sys.stdout, flush=True)
             return False
