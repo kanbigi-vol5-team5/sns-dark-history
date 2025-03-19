@@ -32,6 +32,11 @@ class DarkEvaluator:
             logOutput(f"Error: Response status is not OK. ({response.status_code})")
             return False
         result = response.json()
+
+        if result['data']['error']:
+            logOutput(f"Error: {result['data']['error']}")
+            return
+        
         if not result['data']['outputs'] or not result['data']['outputs']['output']:
             print(result)
             return False

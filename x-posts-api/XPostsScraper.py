@@ -58,6 +58,7 @@ class XPostsScraper:
                 logOutput(f"Error: {e}")
         tweets_text = list(set(tweets_text))
         return tweets_text
+    
     async def getIcon(self, id):
         self.driver.get(f'{X_URL}/{id}/photo')
         time.sleep(1)
